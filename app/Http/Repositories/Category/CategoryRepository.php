@@ -1,8 +1,13 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Http\Repositories\Category;
 
-class CategoryRepository 
+use App\Models\Category;
+
+class CategoryRepository
 {
-    //
+    public function all()
+    {
+        return Category::latest()->get();
+    }
 }

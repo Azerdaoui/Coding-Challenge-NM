@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Services\Product;
+namespace App\Http\Services\Product;
 
-use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Http\Repositories\Product\ProductRepository;
 
-class ProductService implements CategoryRepositoryInterface
+class ProductService
 {
     private $productRepository;
 
-    public function __construct(CategoryRepositoryInterface $productRepository)
+    public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
+    }
+
+    public function store($request)
+    {
+        return $this->productRepository->store($request);
     }
 }
