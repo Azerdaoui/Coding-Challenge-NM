@@ -12,7 +12,7 @@ class CreateCategory extends Command
      *
      * @var string
      */
-    protected $signature = 'create:category {category_name}';
+    protected $signature = 'create:category';
 
     /**
      * The console command description.
@@ -38,10 +38,14 @@ class CreateCategory extends Command
      */
     public function handle()
     {
-        $category_name = $this->argument('category_name');
+        $category_name  = $this->ask('Category name');
+        $parent_id = $this->ask('Category parent_id');
+
+        // $category_name = $this->argument('category_name');
+        // $parent_id = $this->argument('parent_id');
 
         $categoryService = new CategoryService();
-        $categoryService->createCategoryCLI($category_name);
+        $categoryService->createCategoryCLI($category_name, $parent_id);
         
         $this->info('Category was created successfully');
 

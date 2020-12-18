@@ -11,11 +11,21 @@ class CategoryRepository
         return Category::latest()->get();
     }
 
-    public function store(String $name)
+    public function store(String $name, int $parent_id=null)
     {
-        Category::create([
-            'name' => $name
-        ]);
+        // dd($name, $parent_id);
+
+        $category = new Category();
+
+        $category->name = $name;
+        $category->parent_id = $parent_id;
+
+        $category->save();
+
+        // Category::create([
+        //     'name' => $name,
+        //     'parent_id' => $parent_id
+        // ]);
     }
 
     public function destroy(String $name)

@@ -19,9 +19,9 @@ class CategoryService
         return $this->categoryRepository->all();
     }
 
-    public function createCategoryCLI(String $name)
+    public function createCategoryCLI(String $name, int $parent_id=null)
     {
-        $this->categoryRepository->store($name);
+        $this->categoryRepository->store($name, $parent_id);
     }
 
     public function deleteCategoryCLI(String $name)
