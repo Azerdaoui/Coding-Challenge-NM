@@ -22,4 +22,9 @@ class ProductService
     {
         return $this->productRepository->store($request);
     }
+
+    public function destroy($request)
+    {
+        $this->productRepository->destroy($request);
+    }
 }
