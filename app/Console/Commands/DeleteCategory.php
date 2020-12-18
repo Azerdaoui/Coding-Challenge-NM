@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Services\Category\CategoryService;
 
 class DeleteCategory extends Command
@@ -12,7 +13,7 @@ class DeleteCategory extends Command
      *
      * @var string
      */
-    protected $signature = 'delete:category {category_name}';
+    protected $signature = 'delete:category';
 
     /**
      * The console command description.
@@ -38,12 +39,38 @@ class DeleteCategory extends Command
      */
     public function handle()
     {
-        $category_name = $this->argument('category_name');
 
-        $categoryService = new CategoryService();
-        $categoryService->deleteCategoryCLI($category_name);
-        
-        $this->info('Category was deleted successfully');
+        $category_name  = $this->ask('Category name');
+
+        $data = array(
+            'category_name' => $category_name,
+        );
+    
+        $rules = array(
+            'category_name' => 'required|string',
+        );
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) 
+        {
+            $messages = $validator->messages();
+
+            $this->info($messages);
+        }
+        else
+        {
+            $categoryService = new CategoryService();
+            
+            $categoryService->deleteCategoryCLI($category_name);
+            
+            $this->info('Category was deleted successfully');
+        }
+
+        return 0;
+
+
+
 
         return 0;
     }
