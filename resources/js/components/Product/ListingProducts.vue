@@ -28,7 +28,6 @@
                         <th scope="col">Price</th>
                         <th scope="col">Category</th>
                         <th scope="col">Description</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,9 +38,6 @@
                         <td>{{ product.price }}</td>
                         <td>{{ product.category.name }}</td>
                         <td>{{ product.description }}</td>
-                        <td>
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </td>
                     </tr>
                 </tbody>
             </table>

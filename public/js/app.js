@@ -2186,10 +2186,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -21085,9 +21081,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(product.category.name))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(product.description))]),
-              _vm._v(" "),
-              _vm._m(1, true)
+              _c("td", [_vm._v(_vm._s(product.description))])
             ])
           }),
           0
@@ -21113,18 +21107,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Category")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Description")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-sm btn-danger" }, [_vm._v("Delete")])
     ])
   }
 ]
