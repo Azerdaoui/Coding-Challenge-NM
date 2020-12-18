@@ -26,7 +26,7 @@ A message of success will be prompted if the product was created successfully.
 ```sh
 php artisan delete:product 
 ```
-The command prompt will ask you for the product name
+The command prompt will ask you for the product ID
 A message of success will be prompted if the product was created successfully.
 
 ## Create/Delete Category from command line
