@@ -68,6 +68,8 @@ class ProductRepository
 
     public function destroy($product_name)
     {
-        Product::where('name', $product_name)->delete();
+        $product = Product::where('name', $product_name)->firstOrFail();
+
+        $product->delete();
     }
 }
