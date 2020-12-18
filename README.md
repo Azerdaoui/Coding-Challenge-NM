@@ -33,7 +33,7 @@ A message of success will be prompted if the product was created successfully.
 
 ### Create a new Category
 ```sh
-php artisan create:category {category_name}
+php artisan create:category
 ```
 
 The command prompt will ask you for the category details (name, parent_id).
