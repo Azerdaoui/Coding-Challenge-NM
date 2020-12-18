@@ -46,9 +46,7 @@ php artisan delete:category
 The command prompt will ask you for the category name
 A message of success will be prompted if the product was created successfully.
 
-## Create new Product test.
-
-### run test
+## run test
 ```sh
 php artisan test
 ```
