@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Services\Product\ProductService;
 
+use Illuminate\Support\Facades\Validator;
+
 class DeleteProduct extends Command
 {
     
@@ -43,12 +45,33 @@ class DeleteProduct extends Command
      */
     public function handle()
     {
-        $name = $this->ask('Product name:');
+        $id = $this->ask('Product id:');
 
-        $this->productService->destroy($name);
+        $data = array(
+            'id'  => $id,  
+        );
+    
+        $rules = array(
+            'id' => 'required|numeric', 
+        );
+    
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) 
+        {
+            $messages = $validator->messages();
+
+            $this->info($messages);
+        }
+        else
+        {
+            $this->productService->destroy($id);
         
-        $this->info('Product was deleted successfully');
+            $this->info('Product was deleted successfully');
+    
+            return 0;
+        } 
 
-        return 0;
+
     }
 }

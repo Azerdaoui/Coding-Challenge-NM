@@ -66,9 +66,9 @@ class ProductRepository
         return url($this->images_link . $image_name);
     }
 
-    public function destroy($product_name)
+    public function destroy($product_id)
     {
-        $product = Product::where('name', $product_name)->firstOrFail();
+        $product = Product::findOrFail($product_id);
 
         $product->delete();
     }
