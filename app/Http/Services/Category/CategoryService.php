@@ -23,4 +23,9 @@ class CategoryService
     {
         $this->categoryRepository->store($name);
     }
+
+    public function deleteCategoryCLI(String $name)
+    {
+        $this->categoryRepository->destroy($name);
+    }
 }

@@ -17,4 +17,9 @@ class CategoryRepository
             'name' => $name
         ]);
     }
+
+    public function destroy(String $name)
+    {
+        Category::where('name', $name)->delete();
+    }
 }
