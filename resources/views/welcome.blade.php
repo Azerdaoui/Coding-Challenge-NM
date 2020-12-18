@@ -28,7 +28,12 @@
   
                 <create-form-product />
             </div>
+            
+            <hr>
 
+            <div class="row">
+                <listing-products />
+            </div>
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>

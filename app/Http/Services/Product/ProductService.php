@@ -13,6 +13,11 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
+    public function index($request)
+    {
+        return $this->productRepository->allProducts($request);
+    }
+
     public function store($request)
     {
         return $this->productRepository->store($request);

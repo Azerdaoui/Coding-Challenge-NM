@@ -12,10 +12,33 @@ class ProductRepository
 {
     private $images_link = 'storage/images/';
 
+    public function allProducts($request)
+    {
+        $sortBy = $request->sortBy;
+        $category_id = $request->category_id;
+
+        if($sortBy === null)
+        {
+            $sortBy = "created_at";
+        }   
+        
+        $query = Product::orderBy($sortBy, 'DESC')->with('category');
+
+        if($category_id != null){
+            $query->where(function($query) use ($category_id){
+                $query->where('category_id', $category_id);
+            });
+        }
+
+        $products  = $query->get();
+
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
     public function store($request)
     {
-        // dd($request->all());
-
         return Product::create([
             'name'  => $request->name,
             'price' => $request->price,

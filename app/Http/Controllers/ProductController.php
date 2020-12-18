@@ -33,4 +33,9 @@ class ProductController extends Controller
             ];
         }
     }
+
+    public function index(Request $request)
+    {
+        return $this->productService->index($request);
+    }
 }

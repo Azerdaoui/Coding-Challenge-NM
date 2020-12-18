@@ -21,5 +21,6 @@ Route::get('/', function () {
 
 
 Route::post('/products/store', [ProductController::class, 'store']);
+Route::get('/products/listing', [ProductController::class, 'index']);
 
 Route::get('/categories/all', [CategoryController::class, 'allCategories']); 

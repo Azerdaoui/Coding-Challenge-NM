@@ -14,8 +14,8 @@ class Product extends Model
         'name', 'description', 'price', 'image', 'category_id'
     ];
 
-    public function categories()
+    public function category()
     {
-        return $this->BelongsToMany(Category::class);
+        return $this->BelongsTo(Category::class);
     }
 }
