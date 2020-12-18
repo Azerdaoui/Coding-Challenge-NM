@@ -39,13 +39,17 @@ class ProductRepository
 
     public function store($request)
     {
-        return Product::create([
-            'name'  => $request->name,
-            'price' => $request->price,
-            'image' => $this->uploadImage($request),
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-        ]);
+        $product = new Product();
+
+        $product->name  = $request['name'];
+        $product->price = $request['price'];
+        is_object($request['image']) ? $product->image = $this->uploadImage($request) : $product->image = null;
+        $product->category_id = $request['category_id'];
+        $product->description = $request['description'];
+        
+        $product->save();
+
+        return $product;
     }
 
     public function uploadImage($request)
