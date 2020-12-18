@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Services\Category\CategoryService;
 
 class CreateCategory extends Command
@@ -41,13 +42,31 @@ class CreateCategory extends Command
         $category_name  = $this->ask('Category name');
         $parent_id = $this->ask('Category parent_id');
 
-        // $category_name = $this->argument('category_name');
-        // $parent_id = $this->argument('parent_id');
+        $data = array(
+            'category_name' => $category_name,
+            'parent_id'  => $parent_id
+        );
+    
+        $rules = array(
+            'category_name' => 'required|string',
+            'parent_id'  => 'nullable|numeric',
+        );
+    
+        $validator = Validator::make($data, $rules);
+    
+        if ($validator->fails()) 
+        {
+            $messages = $validator->messages();
 
-        $categoryService = new CategoryService();
-        $categoryService->createCategoryCLI($category_name, $parent_id);
-        
-        $this->info('Category was created successfully');
+            $this->info($messages);
+        }
+        else
+        {
+            $categoryService = new CategoryService();
+            $categoryService->createCategoryCLI($category_name, $parent_id);
+            
+            $this->info('Category was created successfully');
+        }
 
         return 0;
     }
