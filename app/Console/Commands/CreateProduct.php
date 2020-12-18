@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Console\Command;
 use App\Http\Services\Product\ProductService;
 
+use Illuminate\Support\Facades\Validator;
+
 class CreateProduct extends Command
 {
 
@@ -49,17 +51,42 @@ class CreateProduct extends Command
         $category_id = $this->ask('Product category:');
         $description = $this->ask('Product description:');
 
-        $data = [
+        $data = array(
             'name'  => $name,  
             'price' => $price,  
             'category_id' => $category_id,  
-            'description' => $description,  
-        ];
+            'description' => $description
+        );
+    
+        $rules = array(
+            'name'  => 'required|string', 
+            'price' => 'required|numeric', 
+            'category_id' => 'required|numeric', 
+            'description' => 'required|string',
+        );
+    
+        $validator = Validator::make($data, $rules);
+    
+        if ($validator->fails()) 
+        {
+            $messages = $validator->messages();
 
-        $this->productService->store(new Request($data));
+            $this->info($messages);
+        }
+        else
+        {
+            $dataProduct = [
+                'name'  => $name,  
+                'price' => $price,  
+                'category_id' => $category_id,  
+                'description' => $description,  
+            ];
+    
+            $this->productService->store(new Request($dataProduct));
+    
+            $this->info('Product was created successfully');
 
-        $this->info('Product was created successfully');
-
-        return 0;
+            return 0;
+        }       
     }
 }
