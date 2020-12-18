@@ -10,4 +10,11 @@ class CategoryRepository
     {
         return Category::latest()->get();
     }
+
+    public function store(String $name)
+    {
+        Category::create([
+            'name' => $name
+        ]);
+    }
 }

@@ -9,13 +9,18 @@ class CategoryService
 {
     private $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct()
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryRepository = new CategoryRepository();
     }
 
     public function getAllCategories()
     {
         return $this->categoryRepository->all();
+    }
+
+    public function createCategoryCLI(String $name)
+    {
+        $this->categoryRepository->store($name);
     }
 }
