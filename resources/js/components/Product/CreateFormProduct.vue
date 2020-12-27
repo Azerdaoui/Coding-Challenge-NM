@@ -9,6 +9,10 @@
                 </div>
                 
                 <div class="modal-body">
+
+                    <div class="alert alert-danger">
+                        <span v-if="errors">{{ errors }} </span>
+                    </div>
                    
                     <form class="form">
                         
@@ -35,13 +39,13 @@
                         <div class="mb-3">
                             <label class="form-label">Category</label>
                             
-                            <select v-model="product.category_id" :class="errors.category_id != null ? 'is-invalid':''" class="form-control">
+                            <select v-model="product.categoryId" :class="errors.categoryId != null ? 'is-invalid':''" class="form-control">
                                 <option value="">Select</option>
                                 <option v-for="(category, index) in categories" :key="index" :value="category.id">{{ category.name }}</option>
                             </select>
 
-                            <div v-if="errors.category_id">
-                                <small class="text-danger">{{ errors.category_id[0] }}</small>
+                            <div v-if="errors.categoryId">
+                                <small class="text-danger">{{ errors.categoryId[0] }}</small>
                             </div>
                         </div>
                         
@@ -89,7 +93,7 @@ export default {
                 name:'',
                 description:'',
                 price:0,
-                category_id:''
+                categoryId:''
             },
             attachments:[],
             request: new FormData
@@ -100,24 +104,27 @@ export default {
         async store() {
             try
             {
-                this.request.append('name',this.product.name)
-                this.request.append('category_id',this.product.category_id)
-                this.request.append('description',this.product.description)
-                this.request.append('price',this.product.price)
-                this.request.append('image',this.attachments[0])
+                this.request.append('name', this.product.name)
+                this.request.append('categoryId', this.product.categoryId)
+                this.request.append('description', this.product.description)
+                this.request.append('price', this.product.price)
+                if(this.attachments.length > 0)
+                {
+                    this.request.append('image', this.attachments[0])
+                }
 
-                const config = { headers: { 'Content-Type': 'multipart/request-data' } };
+                const config = {headers:{'Content-Type': 'multipart/request-data'}};
 
                 let response = await axios.post('/products/store', this.request, config)
 
-                if(response.data.success == true)
-                {
+                if(response.data.success == true) {
                     window.location.reload()
                 }
             }
-            catch(error)
-            {
-                this.errors = error.response.data.errors
+            catch(error) {
+                console.log(error.response.data.error)
+
+                this.errors = error.response.data.error
             }
         },
 

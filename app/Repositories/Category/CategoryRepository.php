@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories\Category;
+namespace App\Repositories\Category;
 
 use App\Models\Category;
 
@@ -31,5 +31,10 @@ class CategoryRepository
     public function destroy(String $name)
     {
         Category::where('name', $name)->delete();
+    }
+
+    public function findOrFail(int $productId): Category
+    {
+        return Category::findOrFail($productId);
     }
 }

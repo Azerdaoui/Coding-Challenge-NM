@@ -2009,6 +2009,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2018,7 +2022,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: '',
         description: '',
         price: 0,
-        category_id: ''
+        categoryId: ''
       },
       attachments: [],
       request: new FormData()
@@ -2038,13 +2042,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.request.append('name', _this.product.name);
 
-                _this.request.append('category_id', _this.product.category_id);
+                _this.request.append('categoryId', _this.product.categoryId);
 
                 _this.request.append('description', _this.product.description);
 
                 _this.request.append('price', _this.product.price);
 
-                _this.request.append('image', _this.attachments[0]);
+                if (_this.attachments.length > 0) {
+                  _this.request.append('image', _this.attachments[0]);
+                }
 
                 config = {
                   headers: {
@@ -2061,15 +2067,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   window.location.reload();
                 }
 
-                _context.next = 16;
+                _context.next = 17;
                 break;
 
               case 13:
                 _context.prev = 13;
                 _context.t0 = _context["catch"](0);
-                _this.errors = _context.t0.response.data.errors;
+                console.log(_context.t0.response.data.error);
+                _this.errors = _context.t0.response.data.error;
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -2193,7 +2200,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       categories: [],
       data: {
         sortBy: '',
-        category_id: ''
+        categoryId: ''
       }
     };
   },
@@ -2216,12 +2223,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context.sent;
-                _this.products = response.data.products; // axios.get(url, { params: this.data })
-                //     .then(response => {
-                //         this.products = response.data.products.data
-                //     }).catch(errors => {
-                //         console.log(errors);
-                //     });
+                _this.products = response.data.products;
 
               case 5:
               case "end":
@@ -20688,6 +20690,12 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "alert alert-danger" }, [
+              _vm.errors
+                ? _c("span", [_vm._v(_vm._s(_vm.errors) + " ")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
             _c("form", { staticClass: "form" }, [
               _c("div", { staticClass: "mb-3" }, [
                 _c("label", { staticClass: "form-label" }, [_vm._v("Name")]),
@@ -20771,12 +20779,12 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.product.category_id,
-                        expression: "product.category_id"
+                        value: _vm.product.categoryId,
+                        expression: "product.categoryId"
                       }
                     ],
                     staticClass: "form-control",
-                    class: _vm.errors.category_id != null ? "is-invalid" : "",
+                    class: _vm.errors.categoryId != null ? "is-invalid" : "",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -20789,7 +20797,7 @@ var render = function() {
                           })
                         _vm.$set(
                           _vm.product,
-                          "category_id",
+                          "categoryId",
                           $event.target.multiple
                             ? $$selectedVal
                             : $$selectedVal[0]
@@ -20811,10 +20819,10 @@ var render = function() {
                   2
                 ),
                 _vm._v(" "),
-                _vm.errors.category_id
+                _vm.errors.categoryId
                   ? _c("div", [
                       _c("small", { staticClass: "text-danger" }, [
-                        _vm._v(_vm._s(_vm.errors.category_id[0]))
+                        _vm._v(_vm._s(_vm.errors.categoryId[0]))
                       ])
                     ])
                   : _vm._e()
@@ -20965,8 +20973,8 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.data.category_id,
-                expression: "data.category_id"
+                value: _vm.data.categoryId,
+                expression: "data.categoryId"
               }
             ],
             staticClass: "form-control",
@@ -20983,7 +20991,7 @@ var render = function() {
                     })
                   _vm.$set(
                     _vm.data,
-                    "category_id",
+                    "categoryId",
                     $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                   )
                 },

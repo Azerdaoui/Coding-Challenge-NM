@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-3">
                 <label>Category</label> <br>
-                <select v-model="data.category_id" @change="getProducts()" class="form-control">
+                <select v-model="data.categoryId" @change="getProducts()" class="form-control">
                     <option value="">Select</option>
                     <option v-for="(category, index) in categories" :key="index" :value="category.id">{{ category.name }}</option>
                 </select>
@@ -53,21 +53,17 @@ export default {
             categories: [],
             data: {
                 sortBy:'',
-                category_id:''
+                categoryId:''
             }
         }
     },
 
     methods: {
         async getProducts(url = '/products/listing') {
+            
             let response = await axios.get(url, { params: this.data });
+            
             this.products = response.data.products;
-            // axios.get(url, { params: this.data })
-            //     .then(response => {
-            //         this.products = response.data.products.data
-            //     }).catch(errors => {
-            //         console.log(errors);
-            //     });
         },
 
         async getAllCategories()

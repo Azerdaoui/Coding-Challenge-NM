@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Product;
 
 use Illuminate\Console\Command;
-use App\Http\Services\Product\ProductService;
+use App\Services\Product\ProductService;
 
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\Product\ProductRepository;
 
 class DeleteProduct extends Command
 {
@@ -34,8 +35,8 @@ class DeleteProduct extends Command
     public function __construct()
     {
         parent::__construct();
-
-        $this->productService = new ProductService();
+        
+        $this->productService = new ProductService(new ProductRepository());
     }
 
     /**

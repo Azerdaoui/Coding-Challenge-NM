@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Services\Category;
+namespace App\Services\Category;
 
-use Intervention\Image\ImageManager;
-use App\Http\Repositories\Category\CategoryRepository;
+use App\Repositories\Category\CategoryRepository;
 
 class CategoryService
 {

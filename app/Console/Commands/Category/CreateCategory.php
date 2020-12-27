@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Category;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Services\Category\CategoryService;
+use App\Services\Category\CategoryService;
 
-class DeleteCategory extends Command
+class CreateCategory extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'delete:category';
+    protected $signature = 'create:category';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Delete a category';
+    protected $description = 'Create a category';
 
     /**
      * Create a new command instance.
@@ -39,19 +39,21 @@ class DeleteCategory extends Command
      */
     public function handle()
     {
-
         $category_name  = $this->ask('Category name');
+        $parent_id = $this->ask('Category parent_id');
 
         $data = array(
             'category_name' => $category_name,
+            'parent_id'  => $parent_id
         );
     
         $rules = array(
             'category_name' => 'required|string',
+            'parent_id'  => 'nullable|numeric',
         );
-
+    
         $validator = Validator::make($data, $rules);
-
+    
         if ($validator->fails()) 
         {
             $messages = $validator->messages();
@@ -61,16 +63,10 @@ class DeleteCategory extends Command
         else
         {
             $categoryService = new CategoryService();
+            $categoryService->createCategoryCLI($category_name, $parent_id);
             
-            $categoryService->deleteCategoryCLI($category_name);
-            
-            $this->info('Category was deleted successfully');
+            $this->info('Category was created successfully');
         }
-
-        return 0;
-
-
-
 
         return 0;
     }
