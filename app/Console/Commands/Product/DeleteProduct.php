@@ -72,7 +72,5 @@ class DeleteProduct extends Command
     
             return 0;
         } 
-
-
     }
 }

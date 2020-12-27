@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands\Product;
 
-// use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Console\Command;
 
 use App\Services\Product\ProductService;
-use Illuminate\Support\Facades\Validator;
 use App\Repositories\Product\ProductRepository;
+
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreateProduct extends Command
@@ -60,7 +60,7 @@ class CreateProduct extends Command
             'price' => $price,  
             'categoryId' => $category_id,  
             'description' => $description,
-            'image' => $this->createUploadedFile($imageUrl)
+            'image' => $imageUrl != null ? $this->createUploadedFileObject($imageUrl) : null
         );
 
         $this->productService->store($dataProduct);
@@ -70,7 +70,7 @@ class CreateProduct extends Command
         return 0;       
     }
 
-    public function createUploadedFile(string $imageUrl)
+    public function createUploadedFileObject(string $imageUrl): ?UploadedFile
     {
         return new UploadedFile($imageUrl, pathinfo($imageUrl)['basename'], filesize($imageUrl), true, true);
     }
