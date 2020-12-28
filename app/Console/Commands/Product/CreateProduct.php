@@ -49,25 +49,31 @@ class CreateProduct extends Command
      */
     public function handle()
     {
-        $name  = $this->ask('Product name');
-        $price = $this->ask('Product price');
-        $category_id = $this->ask('Product category');
-        $description = $this->ask('Product description');
-        $imageUrl = $this->ask('Product image URL');
 
-        $dataProduct = array(
-            'name'  => $name,  
-            'price' => $price,  
-            'categoryId' => $category_id,  
-            'description' => $description,
-            'image' => $imageUrl != null ? $this->createUploadedFileObject($imageUrl) : null
-        );
+        $dataProduct = $this->askForProductDetails();
 
         $this->productService->store($dataProduct);
     
         $this->info('Product was created successfully');
 
         return 0;       
+    }
+
+    public function askForProductDetails(): array
+    {
+        $name  = $this->ask('Product name');
+        $price = $this->ask('Product price');
+        $categoryId  = $this->ask('Product category');
+        $description = $this->ask('Product description');
+        $imageUrl    = $this->ask('Product image URL');
+
+        return array(
+            'name'  => $name,  
+            'price' => $price,  
+            'categoryId' => $categoryId,  
+            'description' => $description,
+            'image' => $imageUrl != null ? $this->createUploadedFileObject($imageUrl) : null
+        );
     }
 
     public function createUploadedFileObject(string $imageUrl): ?UploadedFile

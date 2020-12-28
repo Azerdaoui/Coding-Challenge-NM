@@ -46,16 +46,21 @@ class DeleteProduct extends Command
      */
     public function handle()
     {
-        $productId = $this->ask('Product id:');
-
-        $data = [
-            'productId' => $productId
-        ];
+        $data = $this->askForProductId();
 
         $this->productService->destroy($data);
 
         $this->info('Product was deleted successfully');
     
         return 0;
+    }
+
+    public function askForProductId(): array
+    {
+        $productId = $this->ask('Product id:');
+
+        return array(
+            'productId' => $productId
+        );
     }
 }
