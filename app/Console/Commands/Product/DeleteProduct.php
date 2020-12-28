@@ -46,31 +46,16 @@ class DeleteProduct extends Command
      */
     public function handle()
     {
-        $id = $this->ask('Product id:');
+        $productId = $this->ask('Product id:');
 
-        $data = array(
-            'id'  => $id,  
-        );
-    
-        $rules = array(
-            'id' => 'required|numeric', 
-        );
-    
-        $validator = Validator::make($data, $rules);
+        $data = [
+            'productId' => $productId
+        ];
 
-        if ($validator->fails()) 
-        {
-            $messages = $validator->messages();
+        $this->productService->destroy($data);
 
-            $this->info($messages);
-        }
-        else
-        {
-            $this->productService->destroy($id);
-        
-            $this->info('Product was deleted successfully');
+        $this->info('Product was deleted successfully');
     
-            return 0;
-        } 
+        return 0;
     }
 }

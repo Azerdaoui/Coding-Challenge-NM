@@ -4,13 +4,14 @@ namespace App\Services\Product;
 
 use Image;
 use Throwable;
-use InvalidArgumentException;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
+use App\Rules\Product\CheckProduct;
+use App\Rules\Category\CheckCategory;
+
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
-
-use App\Rules\Category\CheckCategory;
 use App\Repositories\Product\ProductRepository;
 
 class ProductService
@@ -31,9 +32,9 @@ class ProductService
 
     public function store(array $data)
     {        
-        $this->validator($data);
+        $this->validatorStoreProduct($data);
 
-        if(isset($data['image'])){
+        if(isset($data['image'])) {
             $imageUrl = $this->uploadImage($data['image']);
             $data['image'] = $imageUrl;
         }
@@ -41,12 +42,25 @@ class ProductService
         $this->productRepository->store($data);
     }
 
-    public function destroy($request)
+    public function destroy(array $data)
     {
-        $this->productRepository->destroy($request);
+        $this->validatorDestroyProduct($data);
+
+        $this->productRepository->destroy($data);
     }
 
-    public function validator(array $data)
+    public function validatorDestroyProduct(array $data)
+    {
+        $validator = Validator::make($data, [
+            'productId' => ['required', 'numeric', new CheckProduct()],
+        ]);
+
+        if($validator->fails()) {
+            throw new InvalidArgumentException($validator->errors());
+        }
+    }
+
+    public function validatorStoreProduct(array $data)
     {
         $validator = Validator::make($data, [
             'name'  => ['required', 'string', 'max:255'],

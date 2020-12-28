@@ -48,10 +48,15 @@ class ProductRepository
         $product->save();
     }
 
-    public function destroy($product_id)
+    public function destroy(array $data)
     {
-        $product = Product::findOrFail($product_id);
+        $product = Product::findOrFail($data['productId']);
 
         $product->delete();
+    }
+
+    public function findOrFail(int $productId): Product
+    {
+        return Product::findOrFail($productId);
     }
 }

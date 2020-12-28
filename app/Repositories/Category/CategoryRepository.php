@@ -33,8 +33,8 @@ class CategoryRepository
         Category::where('name', $name)->delete();
     }
 
-    public function findOrFail(int $productId): Category
+    public function findOrFail(int $categorytId): Category
     {
-        return Category::findOrFail($productId);
+        return Category::findOrFail($categorytId);
     }
 }
