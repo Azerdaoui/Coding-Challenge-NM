@@ -49,7 +49,6 @@ class CreateProduct extends Command
      */
     public function handle()
     {
-
         $dataProduct = $this->askForProductDetails();
 
         $this->productService->store($dataProduct);

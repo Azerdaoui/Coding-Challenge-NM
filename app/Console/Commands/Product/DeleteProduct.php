@@ -10,7 +10,6 @@ use App\Repositories\Product\ProductRepository;
 
 class DeleteProduct extends Command
 {
-    
     private $productService;
 
     /**
@@ -32,11 +31,11 @@ class DeleteProduct extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ProductService $productService)
     {
         parent::__construct();
         
-        $this->productService = new ProductService(new ProductRepository());
+        $this->productService = $productService;
     }
 
     /**

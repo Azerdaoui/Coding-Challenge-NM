@@ -20,7 +20,7 @@ class ProductRepository
         
         $query = Product::orderBy($sortBy, 'DESC')->with('category');
 
-        if($categoryId != null){
+        if($categoryId != null) {
             $query->where(function($query) use ($categoryId){
                 $query->where('category_id', $categoryId);
             });
