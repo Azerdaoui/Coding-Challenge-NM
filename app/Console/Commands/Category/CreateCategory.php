@@ -30,11 +30,11 @@ class CreateCategory extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CategoryService $categoryService)
     {
         parent::__construct();
 
-        $this->categoryService = new CategoryService();
+        $this->categoryService = $categoryService;
     }
 
     /**

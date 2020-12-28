@@ -8,6 +8,8 @@ use App\Services\Category\CategoryService;
 
 class DeleteCategory extends Command
 {
+    private $categoryService;
+
     /**
      * The name and signature of the console command.
      *
@@ -27,9 +29,11 @@ class DeleteCategory extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CategoryService $categoryService)
     {
         parent::__construct();
+
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -39,39 +43,21 @@ class DeleteCategory extends Command
      */
     public function handle()
     {
-
-        $category_name  = $this->ask('Category name');
-
-        $data = array(
-            'category_name' => $category_name,
-        );
-    
-        $rules = array(
-            'category_name' => 'required|string',
-        );
-
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) 
-        {
-            $messages = $validator->messages();
-
-            $this->info($messages);
-        }
-        else
-        {
-            $categoryService = new CategoryService();
+        $data = $this->askForDetails();
+        
+        $this->categoryService->deleteCategoryCLI($data);
             
-            $categoryService->deleteCategoryCLI($category_name);
-            
-            $this->info('Category was deleted successfully');
-        }
+        $this->info('Category was deleted successfully');
 
         return 0;
+    }
 
+    public function askForDetails(): array
+    {
+        $categoryId = $this->ask('Category ID');
 
-
-
-        return 0;
+        return array(
+            'categoryId' => $categoryId,
+        );
     }
 }

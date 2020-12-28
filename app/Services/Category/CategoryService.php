@@ -28,9 +28,22 @@ class CategoryService
         $this->categoryRepository->store($data);
     }
 
-    public function deleteCategoryCLI(String $name)
+    public function deleteCategoryCLI(array $data)
     {
-        $this->categoryRepository->destroy($name);
+        $this->validatorDeleteCategory($data);
+
+        $this->categoryRepository->destroy($data);
+    }
+
+    public function validatorDeleteCategory(array $data)
+    {
+        $validator = Validator::make($data, [
+            'categoryId' => ['required', 'numeric', new CheckCategory()]
+        ]);
+
+        if($validator->fails()) {
+            throw new InvalidArgumentException($validator->errors());
+        }
     }
 
     public function validatorCreateCategory(array $data)

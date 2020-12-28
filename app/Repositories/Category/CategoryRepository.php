@@ -21,9 +21,9 @@ class CategoryRepository
         $category->save();
     }
 
-    public function destroy(String $name)
+    public function destroy(array $data)
     {
-        Category::where('name', $name)->delete();
+        Category::findOrFail($data['categoryId'])->delete();
     }
 
     public function findOrFail(int $categorytId): Category
