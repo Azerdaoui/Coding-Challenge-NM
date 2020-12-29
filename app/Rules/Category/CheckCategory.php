@@ -15,9 +15,9 @@ class CheckCategory implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = new CategoryRepository();
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**

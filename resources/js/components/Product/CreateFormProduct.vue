@@ -102,8 +102,7 @@ export default {
 
     methods: {
         async store() {
-            try
-            {
+            try {
                 this.request.append('name', this.product.name)
                 this.request.append('categoryId', this.product.categoryId)
                 this.request.append('description', this.product.description)
@@ -113,31 +112,28 @@ export default {
                     this.request.append('image', this.attachments[0])
                 }
 
-                const config = {headers:{'Content-Type': 'multipart/request-data'}};
+                const config = { headers:{'Content-Type': 'multipart/request-data'} };
 
                 let response = await axios.post('/products/store', this.request, config)
 
                 if(response.data.success == true) {
                     window.location.reload()
                 }
-            }
-            catch(error) {
-                console.log(error.response.data.error)
+            } catch(error) {
+                console.log(error.response.data.response.error)
 
-                this.errors = error.response.data.error
+                this.errors = error.response.data.response.error
             }
         },
 
-        fieldChange(e, file, fileList){
+        fieldChange(e, file, fileList) {
 
             let selectedFiles = e.target.files
-            if(!selectedFiles.length)
-            {
+            if(!selectedFiles.length) {
                 return false
             }
             this.attachments = [];
-            for(let i=0;i<selectedFiles.length;i++)
-            {
+            for(let i=0;i<selectedFiles.length;i++) {
                 this.attachments.push(selectedFiles[i])
             }
         },
@@ -150,7 +146,7 @@ export default {
         }
     },
 
-    mounted(){
+    mounted() {
         this.getAllCategories()
     }
 }

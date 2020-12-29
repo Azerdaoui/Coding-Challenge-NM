@@ -12,9 +12,9 @@ class CheckProduct implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->productRepository = new ProductRepository();
+        $this->productRepository = $productRepository;
     }
 
     /**
